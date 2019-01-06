@@ -5,10 +5,12 @@
 
 mkdir GCcontent
 
+echo "$@"
+
 #computeGCBias form deeptools software
 echo "[1] Running computeGCBias ..."
 
-ls bam/*_unique.bam | cut -d'-' -f1 | parallel 'computeGCBias -b {}.bam --effectiveGenomeSize $1 -g $2 -o GCcontent/{}_GCbias.txt --biasPlot GCcontent/{}_GCbias.png --regionSize 300 -l $3 -p $4'
+ls bam/*_unique.bam | cut -d'/' -f2 | cut -d'.' -f1-5 | parallel computeGCBias -b bam/'{}'.bam  --effectiveGenomeSize ${1} -g ${2} -o GCcontent/'{}'_GCbias.txt --biasPlot GCcontent/'{}'_GCbias.png --regionSize 300 -l ${3} -p ${4}
 
 echo "	Done!" 
     
