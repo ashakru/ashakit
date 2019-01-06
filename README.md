@@ -26,4 +26,15 @@ Basic script:
 ```bash
 computeGCBias -b file.bam --effectiveGenomeSize 270126066 -g genome.2bit -o output.txt -l 50 --biasPlot plot.png 
 ```  
-	
+
+### Common files operations
+
+#### Samtools  
+
+###### samtools index   
+Index all .bam files in the folder. Obtained from Pierre Lindenbaum ([Biostars forum](https://www.biostars.org/p/170522/))   
+```bash
+ls *.bam | parallel samtools index '{}'
+```	
+
+
