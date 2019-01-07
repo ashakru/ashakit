@@ -27,7 +27,20 @@ Basic script:
 computeGCBias -b file.bam --effectiveGenomeSize 270126066 -g genome.2bit -o output.txt -l 50 --biasPlot plot.png 
 ```  
 
-### Common files operations
+#### Qualimap  
+
+###### Multi-sample BamQC  
+Script to run quality check for multiple BAM files  
+
+Prerequisites:
+**File describing input data**  Example script for generation a file with input data from a sample sheet containing experimental condition names and IDs for each BAM file:   
+bamQC_table.R
+
+```bash
+qualimap multi-bamqc -c -d bamQC_fileslist.txt -gff regions.gtf -outdir multi_bamQC -outfile multi_bamQC.pdf -r
+```
+
+### Useful files operations
 
 #### Samtools  
 
