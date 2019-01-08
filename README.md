@@ -3,7 +3,7 @@ Useful, time-saving scripts and workflows for everyday use
 
 ### Quality Check  
 
-#### Deeptools  
+#### Deeptools  3.1.3
 
 ###### computeGCBias  
 Prerequisites:  
@@ -27,7 +27,7 @@ Basic script:
 computeGCBias -b file.bam --effectiveGenomeSize 270126066 -g genome.2bit -o output.txt -l 50 --biasPlot plot.png 
 ```  
 
-#### Qualimap  
+#### Qualimap 2.2.1
 
 ###### Multi-sample BamQC  
 Script to run quality check for multiple BAM files  
@@ -40,9 +40,27 @@ bamQC_table.R
 qualimap multi-bamqc -c -d bamQC_fileslist.txt -gff regions.gtf -outdir multi_bamQC -outfile multi_bamQC.pdf -r
 ```
 
+### Alignment  
+
+#### Salmon 0.12.0  
+
+###### Quasi-mapping mode  
+
+**Indexing**  Run once for a particular set of reference transcripts (eg. obtained from GENCODE), -k parameter should be adjusted to the mean reads length, as it represents minimum acceptabe length for a valid match
+
+```bash
+salmon index -t gencode.v28.transcripts.fa -i gencode28_salmonindex25 --type quasi -k 25
+```  
+
+**Quantification** Code for parallel (GNU parallel) processing of all .fastq.gz samples located in ./fastq directory with mean read length = 49 bp.  
+
+```bash
+ls fastq/*_trim.fastq.gz | cut -d '/' -f 2 | cut -d '.' -f 1-5 | parallel salmon quant -i /home/JAK75/Documents/reference-genome/gencode28_salmonindex25 -l SF -r fastq/'{}'.fastq.gz -o transcript_quants/'{}' -p 4 --fldMean=49 --seqBias --gcBias --validateMappings --rangeFactorizationBins=4 --numBootstraps=1000 
+```
+
 ### Useful files operations
 
-#### Samtools  
+#### Samtools 1.7
 
 ###### samtools index   
 Index all .bam files in the folder. Obtained from Pierre Lindenbaum ([Biostars forum](https://www.biostars.org/p/170522/))   
