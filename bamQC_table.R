@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 #Script to prepare list of bam files for Qualimat multi-sample BamQC function
 #All bam files for the analysis located in ./bam
-#Usage: bamQC_table.R sampleSheet.csv bam/*_unique.bam$ output.txt 
+#Usage: bamQC_table.R sampleSheet.csv bam/*_unique.bam$ output.txt
 
 args <- commandArgs(trailingOnly=TRUE)
 #Load table
@@ -15,7 +15,7 @@ print(paths)
 sampleID=sapply(table[,2], function(x){paste(unlist(strsplit(x, split = "[.]"))[1:2], collapse=".")})
 match=match(sampleID, sapply(paths, function(x){
 					paste(unlist(strsplit(x, split="[.]"))[1:2], collapse=".")}))
-table$path <- paste(bamfiles[1], paths[match], sep = "/") 
+table$path <- paste(bamfiles[1], paths[match], sep = "/")
 print(table)
 table <- table[!is.na(match),]
 
@@ -23,4 +23,4 @@ table <- table[!is.na(match),]
 output=paste(getwd(), args[3], sep="/")
 write.table(table[,c(1,4,3)], file=output, quote=F, sep="\t", row.names=F, col.names=F)
 
-print(paste0("Done! Output file: ", output)) 
+print(paste0("Done! Output file: ", output))

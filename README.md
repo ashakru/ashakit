@@ -24,7 +24,7 @@ faToTwoBit in.fa out.2bit
 
 Basic script:  
 ```bash
-computeGCBias -b file.bam --effectiveGenomeSize 270126066 -g genome.2bit -o output.txt -l 50 --biasPlot plot.png 
+computeGCBias -b file.bam --effectiveGenomeSize 270126066 -g genome.2bit -o output.txt -l 50 --biasPlot plot.png
 ```  
 
 #### Qualimap 2.2.1
@@ -55,10 +55,18 @@ salmon index -t gencode.v28.transcripts.fa -i gencode28_salmonindex25 --type qua
 **Quantification** Code for parallel (GNU parallel) processing of all .fastq.gz samples located in ./fastq directory with mean read length = 49 bp.  
 
 ```bash
-ls fastq/*_trim.fastq.gz | cut -d '/' -f 2 | cut -d '.' -f 1-5 | parallel salmon quant -i /home/JAK75/Documents/reference-genome/gencode28_salmonindex25 -l SF -r fastq/'{}'.fastq.gz -o transcript_quants/'{}' -p 4 --fldMean=49 --seqBias --gcBias --validateMappings --rangeFactorizationBins=4 --numBootstraps=1000 
+ls fastq/*_trim.fastq.gz | cut -d '/' -f 2 | cut -d '.' -f 1-5 | parallel salmon quant -i /home/JAK75/Documents/reference-genome/gencode28_salmonindex25 -l SF -r fastq/'{}'.fastq.gz -o transcript_quants/'{}' -p 4 --fldMean=49 --seqBias --gcBias --validateMappings --rangeFactorizationBins=4 --numBootstraps=1000
 ```
 
 ### Useful files operations
+
+###### Extract index barcodes from fastq headers
+
+```bash
+ls fastq/*.fq.gz | cut -d '/' -f 2 | cut -d '.' -f 1-5 | parallel 'gunzip -c  fastq/'{}'.fq.gz | grep "@" | cut -d ':' -f 10 | sort | uniq -c | sort -n | tail > index_stat/'{}'.txt'  
+```
+
+
 
 #### Samtools 1.7
 
@@ -66,6 +74,4 @@ ls fastq/*_trim.fastq.gz | cut -d '/' -f 2 | cut -d '.' -f 1-5 | parallel salmon
 Index all .bam files in the folder. Obtained from Pierre Lindenbaum ([Biostars forum](https://www.biostars.org/p/170522/))   
 ```bash
 ls *.bam | parallel samtools index '{}'
-```	
-
-
+```
