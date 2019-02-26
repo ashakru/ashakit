@@ -1,4 +1,5 @@
-#!/usr/bin/Rscript
+#!/usr/local/bin/Rscript
+
 #Wrapper function at metagene package 
 
 args <- commandArgs(TRUE)

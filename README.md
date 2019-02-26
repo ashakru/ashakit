@@ -3,6 +3,12 @@ Useful, time-saving scripts and workflows for everyday use
 
 ### Quality Check  
 
+#### FASTQC   
+
+```bash
+ls *r_1.fq.gz | parallel fastqc '{}'
+```
+
 #### Deeptools  3.1.3
 
 ###### computeGCBias  
@@ -60,13 +66,24 @@ ls fastq/*_trim.fastq.gz | cut -d '/' -f 2 | cut -d '.' -f 1-5 | parallel salmon
 
 ### Useful files operations
 
+###### Count the number of reads in gziped fastq files
+
+```bash
+echo $(zcat file.fq.gz | wc -l) / 4 | bc
+```
+More [here](http://minutebioinformatics.blogspot.com/2013/07/count-raw-reads-in-fastqgz.html)
+
+###### Merge two or more fastq files  
+
+```bash
+cat *.fq > one.fq
+```
+
 ###### Extract index barcodes from fastq headers
 
 ```bash
 ls fastq/*.fq.gz | cut -d '/' -f 2 | cut -d '.' -f 1-5 | parallel 'gunzip -c  fastq/'{}'.fq.gz | grep "@" | cut -d ':' -f 10 | sort | uniq -c | sort -n | tail > index_stat/'{}'.txt'  
 ```
-
-
 
 #### Samtools 1.7
 
