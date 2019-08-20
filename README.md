@@ -1,5 +1,8 @@
 # ashakit
-Useful, time-saving scripts and workflows for everyday use
+Useful, time-saving scripts, workflows and notes for everyday use
+
+### Useful resources:  
+[Gene ontology analysis in R](https://yulab-smu.github.io/clusterProfiler-book/chapter2.html#over-representation-analysis)
 
 ### Quality Check  
 
